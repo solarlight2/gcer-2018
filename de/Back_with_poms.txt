@@ -1,0 +1,364 @@
+#include <kipr/botball.h>
+const int LTOP = 0;
+const int RTOP = 1;
+const int BLTOP = 1;
+const int BRTOP = 0;
+const int LVAL = 2000;
+const int RVAL = 2000;
+const int RMOTOR = 1;
+const int LMOTOR = 0;
+const int BRMOTOR = 0;
+const int BLMOTOR = 1;
+
+void move(int inches){
+	cmpc(LMOTOR);
+	cmpc(RMOTOR);
+	int C = 350;
+	int tics = C*inches;
+	if (inches > LMOTOR){
+		while(gmpc(LMOTOR) < tics){
+            if(gmpc(LMOTOR)>gmpc(RMOTOR))
+            {
+                mav(LMOTOR,1480);
+                mav(RMOTOR,1500);
+            }
+            else if(gmpc(LMOTOR)<gmpc(RMOTOR))
+            {
+                mav(LMOTOR,1500);
+                mav(RMOTOR,1480);
+            }
+            else
+            {
+                mav(LMOTOR,1500);
+                mav(RMOTOR,1500);
+            }
+}
+	}
+	else {
+		while(gmpc(0) > tics){
+			mav(RMOTOR, -1500);
+			mav(LMOTOR, -1500);}
+		}
+		}
+
+	
+
+void turnRight(int degrees){
+  cmpc(LMOTOR);
+  int C = 25;
+	int tics = C*degrees;
+  while(gmpc(LMOTOR) < tics){
+			mav(LMOTOR, 1000);
+			mav(RMOTOR,-1000);}
+}
+
+void turnLeft(int degrees){
+  cmpc(RMOTOR);
+  int C = 25;
+	int tics = C*degrees;
+  while(gmpc(RMOTOR) < tics){
+			mav(LMOTOR, -1000);
+			mav(RMOTOR, 1000);}
+}
+
+void followLine(){
+	if (analog(LTOP) > 2000){
+		mav(LMOTOR, 1000);
+		mav(RMOTOR, 1500);
+		msleep(8);}
+
+	else if (analog(RTOP) > 2000){
+		mav(LMOTOR, 1500);
+		mav(RMOTOR, 1000);
+		msleep(8);}
+  
+  else{
+    mav(RMOTOR, 1500);
+	mav(LMOTOR, 1500);
+	msleep(10);
+  }
+}
+
+void followLineBack(){
+	
+	if (analog(BLTOP) < LVAL){
+		mav(RMOTOR, -1500);
+		mav(LMOTOR, -1480);
+		msleep(8);
+    }
+
+	else if (analog(BRTOP) < RVAL){
+		mav(LMOTOR, -1490);
+		mav(RMOTOR, -1500);
+		msleep(8);
+    }
+  
+  else{
+    mav(LMOTOR, -1500);
+	mav(RMOTOR, -1400);
+	msleep(10);
+  }
+
+}
+void follow_One() {
+	if(analog(LTOP) > 3500){
+    	mav(LMOTOR, -1500);
+    	mav(RMOTOR, -1500);
+    	msleep(10);}
+    else if(analog(LTOP) < 3500){
+    	mav(LMOTOR, -1450);
+    	mav(RMOTOR, -1500);
+    	msleep(10);}
+    else {
+    	mav(LMOTOR, -1500);
+    	mav(RMOTOR, -1500);
+    	msleep(10);}
+
+}
+
+
+
+int main()
+{
+  enable_servos();
+  set_servo_position(2, 1286);
+  int t;
+  //wait_for_light(2);
+ 	
+  while(analog(LTOP) < 2000 && analog(RTOP) < 2000){
+  	mav(RMOTOR, 1500);
+  	mav(LMOTOR, 1490);
+  }   
+  turnLeft(90);
+  ao();
+  msleep(1000);
+  //set up for PVC
+  msleep(2000);
+  /*while (analog(LTOP) < 2000);
+  {
+  	mav(1, 1500);
+	mav(0, 1500);
+	msleep(10);}
+  
+  msleep(1000);
+  
+  while (analog(LTOP) > 2000);
+  {
+  	mav(1, 1500);
+	mav(0, 1500);}
+  msleep(1000);
+  
+  
+  while (analog(LTOP) < 2000);
+  {
+  	mav(1, 1500);
+	mav(0, 1500);}
+  msleep(1000);
+  
+  mav(1, 500);
+  mav(0, 500);
+  msleep(1000);
+  
+  mav(0, 1500);
+  mav(1, 1500);
+  msleep(7000);
+  ao();
+	
+  while (analog(LTOP) < 2000 || analog(RTOP) < 2000) {
+    mav(1, -500);
+	mav(0, -500);
+  }
+  if (analog(LTOP) < 2000 && analog(RTOP) > 2000){
+  	while(analog(LTOP) < 2000){
+    mav(LMOTOR, -400);}}
+  
+  else if (analog(RTOP) < 2000 && analog(LTOP) > 2000){
+  	while(analog(RTOP) < 2000){
+    mav(RMOTOR, 400);}}*/
+  
+  
+ 
+  mav(RMOTOR,1100);
+  mav(LMOTOR, 1500);
+  msleep(6300);
+  
+  while (analog(RTOP) < 2000)
+  {
+    mav(LMOTOR, -1000);
+    mav(RMOTOR, -1000);
+    msleep(10);
+  }
+ while(analog(RTOP)< 2000 && analog(LTOP) > 2000)
+    {
+      mav(LMOTOR,0);
+      mav(RMOTOR,-500);
+      msleep(10);
+      ao();
+      msleep(10);
+    }
+  ao();
+  msleep(100); 
+  mav(RMOTOR,500);
+  mav(LMOTOR,-800);
+  msleep(1700);
+  ao();
+  msleep(300);
+  
+
+  //over PVC  
+  while(!digital(0)){
+    mav(0, 1500);
+    mav(1, 1500);
+  }
+  
+  t = seconds()+3;
+  while(t>seconds()){
+  mav(0, 1500);
+  mav(1, 1500);
+  }
+    
+  set_servo_position(2, 900);
+  msleep(500);
+    
+  t = seconds()+2;
+  while(t>seconds()){
+  mav(0, 1200);
+  mav(1, 1200);
+  }
+    
+  set_servo_position(2, 1286);
+  msleep(500);
+  set_servo_position(2, 1137);
+  ao();
+  
+while(analog(RTOP) < 2000) {
+  	mav(1,1500);
+    mav(0,1300);
+ }
+  ao();
+  if (analog(LTOP) < 2000)
+  {
+  while(analog(LTOP) < 2000){
+    mav(LMOTOR, 500);
+    mav(RMOTOR,0);
+    msleep(10);
+  }
+  }
+  ao();
+  msleep(200);
+  
+  mav(LMOTOR,500);
+  mav(RMOTOR,0);
+  msleep(1400);
+  
+  ao();
+  msleep(200);
+  
+  turnLeft(90);
+  
+  ao();
+  msleep(200);
+  
+  t = seconds() + 9;
+  while(t>seconds()){
+  	followLineBack();
+  }
+  
+  ao();
+  msleep(200);
+  
+  t = seconds() + 2;
+  while(t>seconds()){
+  	mav(0,-1500);
+    mav(1,-1500);
+  }
+  
+  ao();
+  msleep(200);
+  
+  t = seconds() + 9;
+  while(t>seconds()){
+  	followLineBack();
+  }
+ 
+  turnRight(80);
+  move(-6);
+  ao();
+  msleep(2000);
+  move(6);
+  ao();
+  
+  //getting to blocks
+  ao();
+  
+  while(!digital(0)){
+      mav(0,1500);
+      mav(1,1500);
+      msleep(10);
+  }
+  mav(1,-1000);
+  mav(0,-1000);
+  msleep(2000);
+  turnRight(90);
+    
+      
+  t = seconds()+1;
+  while (seconds() < t) {
+  mav(LMOTOR,-1500);
+  mav(RMOTOR,-1470);}
+    
+  msleep(20);
+  turnLeft(8);
+  move(-1);
+  turnRight(5);
+  
+  t = seconds()+2;
+  while (seconds() < t) {
+  mav(LMOTOR,-1500);
+      mav(RMOTOR,-1450);}
+  
+  msleep(20);
+  turnLeft(10);
+  move(-1);
+  turnRight(5);
+  
+  /*
+  t = seconds()+3;
+  while (seconds() < t) {
+  mav(LMOTOR,-1500);
+      mav(RMOTOR,-1450);}
+    
+  msleep(20);
+  turnRight(10);
+  move(-1);
+  turnRight(1);
+  */ 
+  t = seconds()+6;
+  while (seconds() < t) {
+  mav(LMOTOR,-1500);
+      mav(RMOTOR,-1450);
+  }
+    
+  msleep(20);
+  turnRight(2);
+  move(-1);
+  turnLeft(1);
+    
+  t = seconds()+7;
+  while (seconds() < t) {
+  	mav(LMOTOR,-1500);
+    mav(RMOTOR,-1450);
+  }
+  
+  mav(1, -1500);
+  mav(0, -1500);
+  msleep(2000);
+	ao();
+    
+  
+
+  disable_servos();
+  return 0;
+}
+
+
